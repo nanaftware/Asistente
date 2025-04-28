@@ -3,7 +3,9 @@ from comandos import comandos_aplicaciones, comandos_detener
 from voz import grabar_texto
 from audio import responder, detener
 from comando import ejecutar
-import respuestas
+from busqueda import buscar_y_abrir
+# import respuestas 
+
 
 def main():
     responder(saludo_inicio())
@@ -27,8 +29,8 @@ def main():
             continue
 
         # consultas en línea
-        info = respuestas.buscar_informacion(texto)
-        responder(info)
+        respuesta = buscar_y_abrir(texto)
+        responder(respuesta)
 
     # al cerrar, limpia mixer
     detener()
