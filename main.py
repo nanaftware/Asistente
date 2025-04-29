@@ -1,38 +1,39 @@
-from mensajes import saludo_inicio, saludo_despedir
-from comandos import comandos_aplicaciones, comandos_detener
+# import respuestas 
+from audio import responder, detener, play_event
 from voz import grabar_texto
-from audio import responder, detener
+from mensajes import saludo_inicio, saludo_despedir, NO_ENTENDIDO
+from comandos import comandos_dict
 from comando import ejecutar
 from busqueda import buscar_y_abrir
-# import respuestas 
-
 
 def main():
     responder(saludo_inicio())
 
     while True:
+        # Si estamos reproduciendo audio, esperamos
+        if play_event.is_set():
+            continue  # saltamos grabar_texto() hasta que termine el TTS :contentReference[oaicite:2]{index=2}
+
         texto = grabar_texto()
         if not texto:
+            responder(NO_ENTENDIDO)
             continue
-        texto = texto.strip().lower()
 
-        if texto in comandos_detener:
+        accion = comandos_dict.get(texto)
+        if accion == "detener":
             detener()
             continue
-
-        if texto in ["salir", "terminar", "adiós", "cerrar"]:
+        if accion == "aplicacion":
+            ejecutar(texto)
+            continue
+        if texto in ("salir","terminar","adiós","cerrar"):
             responder(saludo_despedir())
             break
 
-        if texto in comandos_aplicaciones:
-            ejecutar(texto)
-            continue
-
-        # consultas en línea
+        # Búsqueda en línea
         respuesta = buscar_y_abrir(texto)
         responder(respuesta)
 
-    # al cerrar, limpia mixer
     detener()
 
 if __name__ == "__main__":
