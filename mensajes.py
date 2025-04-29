@@ -19,8 +19,15 @@ saludos_despedida = [
     "¡Anda seguí chamuyando con las putas!",
 ]
 
-def saludo_inicio():
+respuestas_comunes = {
+    "no_entendido": "No te entiendo, intenta de nuevo."
+}
+
+# Exponer constante para importar desde main.py
+NO_ENTENDIDO = respuestas_comunes["no_entendido"]
+
+def saludo_inicio() -> str:
     return random.choice(saludos_iniciales)
 
-def saludo_despedir():
+def saludo_despedir() -> str:
     return random.choice(saludos_despedida)
