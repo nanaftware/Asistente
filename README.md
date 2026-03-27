@@ -7,5 +7,6 @@ Nanu un asistente_virtual/
 ├── comandos.py
 ├── audio.py
 ├── voz.py
-├── respuestas.py      # tu módulo de búsquedas en línea
-└── comando.py        # si necesitas lógica extra de comandos
+├── llm.py
+├── respuestas.py      
+└── comando.py        
